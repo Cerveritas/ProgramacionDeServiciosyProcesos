@@ -4,8 +4,8 @@ public class LazarElHilo {
     public static void main(String[] args) {
 
 
-        Thread h1 = new Thread(new hiloEjemplo3("H1"));
-        Thread h2 = new Thread(new hiloEjemplo3("H2"));
+        Thread h1 = new Thread(new hiloEjemplo4("H1"));
+        Thread h2 = new Thread(new hiloEjemplo4("H2"));
 
         h1.start();
         h2.start();
