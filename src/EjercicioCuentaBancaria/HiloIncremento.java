@@ -10,8 +10,8 @@ public class HiloIncremento extends Thread {
 
     @Override
     public void run() {
-        for (int i = 0; i < 10; i++) {
-            cuenta.ingreso(100);
+        for (int i = 0; i < 1000; i++) {
+            cuenta.ingreso(150);
         }
     }
 }

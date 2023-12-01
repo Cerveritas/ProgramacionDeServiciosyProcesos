@@ -10,9 +10,9 @@ public class HiloDecremento extends Thread {
 
     @Override
     public void run() {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 1000; i++) {
             try {
-                cuenta.retirar(150);
+                cuenta.retirar(100);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
