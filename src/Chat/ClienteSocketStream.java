@@ -6,35 +6,44 @@ import java.net.Socket;
 import java.util.Scanner;
 import java.util.concurrent.Semaphore;
 
-public class ClienteSocketStream extends Thread{
-    @Override
-    public void run() {
-        System.out.println("Creando socket cliente");
-        Scanner sc = new Scanner(System.in);
-        boolean continuar = true;
-        while (continuar) {
-            try (Socket clientSocket = new Socket()) {
-                // Para indicar la dirección IP y el número de puerto del socket stream servidor
-                // al que se desea conectar, el método connect() hace uso de un objeto
-                // de la clase java.net.InetSocketAddress.
-                InetSocketAddress addr = new InetSocketAddress("10.230.163.211", 5555);
-                clientSocket.connect(addr);
-                try (InputStream is = clientSocket.getInputStream();
-                     OutputStream os = clientSocket.getOutputStream();
-                     // Flujos que manejan caracteres
-                     InputStreamReader isr = new InputStreamReader(is);
-                     OutputStreamWriter osw = new OutputStreamWriter(os);
-                     // Flujos de líneas
-                     BufferedReader bReader = new BufferedReader(isr);
-                     PrintWriter pWriter = new PrintWriter(osw)) {
-                    System.out.print(">");
-                    String mensaje = sc.nextLine();
-                    pWriter.print(mensaje);
-                    pWriter.flush();
+public class ClienteSocketStream {
+
+        public static void main(String[] args) {
+
+            String serverIP = "10.230.163.211";
+            int serverPort = 5555;
+
+            try (Socket socket = new Socket(serverIP, serverPort);
+                 BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                 PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
+                 BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in))) {
+
+                System.out.println("Connected to the server. Type 'exit' to quit.");
+
+                Thread receiverThread = new Thread(() -> {
+                    try {
+                        String serverMessage;
+                        while ((serverMessage = reader.readLine()) != null) {
+                            System.out.println("Server: " + serverMessage);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+                receiverThread.start();
+
+                String userInput;
+                while ((userInput = consoleReader.readLine()) != null) {
+                    if ("exit".equalsIgnoreCase(userInput)) {
+                        break;
+                    }
+                    writer.println(userInput);
                 }
+
+                receiverThread.interrupt();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
-}

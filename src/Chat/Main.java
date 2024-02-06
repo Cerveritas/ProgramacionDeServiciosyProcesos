@@ -8,7 +8,7 @@ public class Main {
         ClienteSocketStream cliente = new ClienteSocketStream();
 
         servidor.start();
-        cliente.start();
+        //cliente.start();
 
 
     }
