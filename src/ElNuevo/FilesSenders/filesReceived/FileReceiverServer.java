@@ -7,7 +7,7 @@ public class FileReceiverServer {
         try (ServerSocket serverSocket = new ServerSocket(2020);
              Socket socket = serverSocket.accept();
              InputStream inputStream = socket.getInputStream();
-             FileOutputStream fileOutputStream = new FileOutputStream("src/ElNuevofilesReceived/FilesSenders/MySecretFileReceived.txt")) {
+             FileOutputStream fileOutputStream = new FileOutputStream("src/ElNuevo/filesSenders/filesReceived/MySecretFileReceived.txt")) {
 
             byte[] buffer = new byte[1024];
             int bytesRead;

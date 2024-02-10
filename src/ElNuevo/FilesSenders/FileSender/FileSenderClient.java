@@ -8,7 +8,7 @@ public class FileSenderClient {
      public static void main(String[] args) {
         final String FILE_PATH = "src/ElNuevo/FilesSenders/files/MySecretFile.txt"; // Cambia esto por la ruta de tu archivo
 
-        try (Socket socket = new Socket("10.230.163.114", 2020);
+        try (Socket socket = new Socket("192.168.56.1", 2020);
              OutputStream outputStream = socket.getOutputStream();
              FileInputStream fileInputStream = new FileInputStream(FILE_PATH)) {
 

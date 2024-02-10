@@ -34,7 +34,7 @@ public class FileSenderClientGUI {
             public void actionPerformed(ActionEvent e) {
                 final String FILE_PATH = "src/ElNuevo/FilesSenders/files/MySecretFile.txt"; // Cambia esto por la ruta de tu archivo
 
-                try (Socket socket = new Socket("localhost", 2020);
+                try (Socket socket = new Socket("192.168.56.1", 2020); //PONER LA IP DEL SERVIDOR AL QUE VAYAMOSA ENVIAR EL MENSAJE
                      OutputStream outputStream = socket.getOutputStream();
                      FileInputStream fileInputStream = new FileInputStream(FILE_PATH)) {
 
@@ -47,8 +47,17 @@ public class FileSenderClientGUI {
 
                     System.out.println("Archivo enviado con éxito.");
 
+                    if (JOptionPane.showConfirmDialog(PanelPrincipal, "El mensaje ha sido enviado con exito...") == 0){
+                        System.exit(0);
+                    }
+
+
                 } catch (IOException e1) {
                     e1.printStackTrace();
+                    if (JOptionPane.showConfirmDialog(PanelPrincipal, "ERROR!!! El mensaje no se ha podido enviar") == 0){
+                        System.exit(0);
+                    }
+
                 }
             }
         });
